@@ -1,25 +1,20 @@
-import {
-  IonApp,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const App: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
-    <IonApp>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>My App</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
-        Add some content here…
+      <IonContent className='ion-padding'>
+        Go to <Link to='/settings'>Settings</Link>
       </IonContent>
-    </IonApp>
+    </IonPage>
   );
 };
 
-export default App;
+export default HomePage;
