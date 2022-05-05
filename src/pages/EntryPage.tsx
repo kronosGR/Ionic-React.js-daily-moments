@@ -1,4 +1,12 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
 import { entries } from '../data';
@@ -18,6 +26,9 @@ const EntryPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot='start'>
+            <IonBackButton />
+          </IonButtons>
           <IonTitle>Entry {entry.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
