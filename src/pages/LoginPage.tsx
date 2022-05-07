@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { Redirect } from 'react-router';
 import { useAuth } from '../auth';
+import { auth } from '../firebase';
 
 interface Props {
   onLogin: () => void;
@@ -16,7 +17,14 @@ interface Props {
 
 const LoginPage: React.FC<Props> = ({ onLogin }) => {
   const { loggedIn } = useAuth();
+
+  const handleLogin = async () => {
+    const credential = await auth.signInWithEmailAndPassword('test@test.com', '123456');
+    console.log(credential);
+  };
+
   if (loggedIn) {
+    handleLogin();
     return <Redirect to='/my/entries' />;
   }
   return (
