@@ -6,7 +6,9 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonLoading,
   IonPage,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -23,11 +25,20 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
   const { loggedIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState({ loading: false, error: false });
 
   const handleLogin = async () => {
-    const credential = await auth.signInWithEmailAndPassword(email, password);
-    console.log(credential);
-    onLogin();
+    try {
+      setStatus({ loading: true, error: false });
+      const credential = await auth.signInWithEmailAndPassword(email, password);
+
+      setStatus({ loading: true, error: false });
+      console.log(credential);
+      onLogin();
+    } catch (error) {
+      console.log(error);
+      setStatus({ loading: false, error: true });
+    }
   };
 
   if (loggedIn) {
@@ -59,9 +70,11 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             />
           </IonItem>
         </IonList>
+        {status.error && <IonText color='danger'>Invalid credentials</IonText>}
         <IonButton expand='block' onClick={handleLogin}>
           Login
         </IonButton>
+        <IonLoading isOpen={status.loading} />
       </IonContent>
     </IonPage>
   );
