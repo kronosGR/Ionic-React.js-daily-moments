@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
-    entriesRef.get().then(({ docs }) => setEntries(docs.map(toEntry)));
+    return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
   }, [userId]);
 
   return (
