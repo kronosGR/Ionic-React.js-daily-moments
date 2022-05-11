@@ -28,7 +28,6 @@ const AddEntryPage: React.FC = () => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
     const entryData = { title, description };
     const entryRef = await entriesRef.add(entryData);
-    console.log('saved', entryRef.id);
     history.goBack();
   };
 
