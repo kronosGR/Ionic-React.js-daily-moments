@@ -14,16 +14,9 @@ import {
 import { add as addIcon } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../auth';
+import { formatDate } from '../date';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
-
-function formatDate(isoString) {
-  return new Date(isoString).toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-}
 
 const HomePage: React.FC = () => {
   const { userId } = useAuth();
@@ -31,7 +24,10 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
-    return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
+    return entriesRef
+      .orderBy('date', 'desc')
+      .limit(7)
+      .onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
   }, [userId]);
 
   return (

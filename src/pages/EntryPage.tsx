@@ -15,6 +15,7 @@ import { useHistory, useParams } from 'react-router';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
 import { useAuth } from '../auth';
+import { formatDate } from '../date';
 
 interface RouteParams {
   id: string;
@@ -58,10 +59,13 @@ const EntryPage: React.FC = () => {
               <IonIcon icon={trashIcon} slot='icon-only' />
             </IonButton>
           </IonButtons>
-          <IonTitle>Entry {entry?.title}</IonTitle>
+          <IonTitle>Entry {formatDate(entry?.date)}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className='ion-padding'>{entry?.description}</IonContent>
+      <IonContent className='ion-padding'>
+        <h2>{entry?.title}</h2>
+        <p>{entry?.description}</p>
+      </IonContent>
     </IonPage>
   );
 };
