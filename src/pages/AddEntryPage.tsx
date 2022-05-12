@@ -15,9 +15,18 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { firestore } from '../firebase';
+import { firestore, storage } from '../firebase';
 import { useAuth } from '../auth';
 import { useHistory } from 'react-router';
+
+async function savePicture(blobUrl, userId) {
+  const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
+  const response = await fetch(blobUrl);
+  const blob = await response.blob();
+  const snapshot = await pictureRef.put(blob);
+  const url = await snapshot.ref.getDownloadURL();
+  return url;
+}
 
 const AddEntryPage: React.FC = () => {
   const { userId } = useAuth();
@@ -46,7 +55,12 @@ const AddEntryPage: React.FC = () => {
 
   const handleSave = async () => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
-    const entryData = { date, title, description };
+    const entryData = { date, title, pictureUrl, description };
+
+    if (pictureUrl.startsWith('blob:')) {
+      entryData.pictureUrl = await savePicture(pictureUrl, userId);
+    }
+
     const entryRef = await entriesRef.add(entryData);
     history.goBack();
   };
