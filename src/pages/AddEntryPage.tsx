@@ -18,6 +18,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { firestore, storage } from '../firebase';
 import { useAuth } from '../auth';
 import { useHistory } from 'react-router';
+import { CameraResultType, Plugins } from '@capacitor/core';
+
+const { Camera } = Plugins;
 
 async function savePicture(blobUrl, userId) {
   const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
@@ -65,6 +68,14 @@ const AddEntryPage: React.FC = () => {
     history.goBack();
   };
 
+  const handlePictureClick = async () => {
+    // fileInputRef.current.click();
+    const photo = Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+    });
+    setPictureUrl((await photo).webPath);
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -104,7 +115,7 @@ const AddEntryPage: React.FC = () => {
             <img
               src={pictureUrl}
               alt=''
-              onClick={() => fileInputRef.current.click()}
+              onClick={handlePictureClick}
               style={{ cursor: 'pointer' }}
             />
           </IonItem>

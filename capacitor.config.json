@@ -10,5 +10,9 @@
     }
   },
   "linuxAndroidStudioPath": "/home/kronos/AppsGames/android-studio/bin/studio.sh",
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.1.70:8100",
+    "cleartext": true
+  }
 }
