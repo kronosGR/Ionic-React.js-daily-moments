@@ -9,5 +9,6 @@
       "launchAutoHide": false
     }
   },
+  "linuxAndroidStudioPath": "/home/kronos/AppsGames/android-studio/bin/studio.sh",
   "cordova": {}
 }
