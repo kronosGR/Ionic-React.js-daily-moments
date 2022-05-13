@@ -1,7 +1,7 @@
 import { IonApp, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import AppTabs from './AppTabs';
 import { AuthContext, useAuthInit } from './auth';
 import LoginPage from './pages/LoginPage';
@@ -17,6 +17,7 @@ const App: React.FC = () => {
     <IonApp>
       <AuthContext.Provider value={auth}>
         <IonReactRouter>
+          <Redirect exact path='/' to='/my/entries' />
           <Switch>
             <Route exact path='/login'>
               <LoginPage />
